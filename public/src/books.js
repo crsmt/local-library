@@ -15,21 +15,38 @@ function partitionBooksByBorrowedStatus(books) {
   result = [borrowed, retained]
   return result
 }
+// function getBorrowersForBook(book, accounts) {
+//   let result = []
+//   accounts.forEach((account) => {
+//     if (book.borrows.some((borrow) => borrow.id === account.id)){
+//       const first = account
+//       console.log(first)
+//       book.borrows.forEach((borrow) => {
+//         if(borrow.id === account.id) {
+//           let {returned} = borrow
+//           const final = {...first, returned}
+//           result.push(final)
+//         }
+//       })
+//     }
+//   })
+//   return limitList(result, 10)
+// }
+
 function getBorrowersForBook(book, accounts) {
-  let result = []
-  accounts.forEach((account) => {
-    if (book.borrows.some((borrow) => borrow.id == account.id)){
-      const first = account
-      book.borrows.forEach((borrow) => {
-        if(borrow.id == account.id) {
-          let {returned} = borrow
-          const final = {...first, returned}
-          result.push(final)
-        }
-      })
-    }
-  })
-  return limitList(result, 10)
+  const accountsById = accounts.reduce((acc, account) => {
+//console.log(account)
+    acc[account.id] = account;
+   // console.log(acc)
+    return acc
+  }, {});
+
+  return book.borrows
+    .map(({ id, returned }) => ({
+      ...accountsById[id],
+      returned,
+    }))
+    .slice(0, 10);
 }
 
 module.exports = {
