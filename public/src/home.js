@@ -12,22 +12,22 @@ function getBooksBorrowedCount(books) {
 }
 
 function getMostCommonGenres(books) {
-  let result = []
-  books.forEach((book) => {
-    let name = book.genre 
-    if(!result.some((check) => check.name == name)) {
-      let count = 1
-      let container = {name, count}
-      result.push({...container})
-    }
-    else{
-      result.forEach((check) => {
-        if(check.name == name) check.count++ 
-      })
-    }
-  })
-  result.sort((itemA, itemB) => itemB.count - itemA.count)
-  return limitList(result, 5)
+    let result = []
+    books.forEach((book) => {
+      let name = book.genre 
+      if(!result.some((check) => check.name == name)) {
+        let count = 1
+        let container = {name, count}
+        result.push({...container})
+      }
+      else{
+        result.forEach((check) => {
+          if(check.name == name) check.count++ 
+        })
+      }
+    })
+    result.sort((itemA, itemB) => itemB.count - itemA.count)
+    return result.slice(0,5)
 }
 
 function getMostPopularBooks(books) {
@@ -38,7 +38,7 @@ function getMostPopularBooks(books) {
     return acc
   }, [])
   result.sort((itemA, itemB) => itemB.count - itemA.count)
-  return limitList(result, 5)
+  return result.slice(0, 5)
 }
 
 function getMostPopularAuthors(books, authors) {
@@ -52,13 +52,13 @@ function getMostPopularAuthors(books, authors) {
     return {...container}
   })
   result.sort((itemA, itemB) => itemB.count - itemA.count)
-  return limitList(result, 5)
+  return result.slice(0,5)
 }
 
 
 function limitList(list, most){
-  let result = []
-  for (let i = 0; 1 <most; i++){
+  let result = [];
+  for (let i = 0; 1 < most; i++){
     result.push(list[i])
   }
   return result

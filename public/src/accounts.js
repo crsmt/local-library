@@ -18,7 +18,7 @@ function getTotalNumberOfBorrows(account, books) {
 
 
 function getBooksPossessedByAccount(account, books, authors){
-  let possess = []
+  let possess = [];
   books.forEach((book) => {
     if(book.borrows[0].returned == false && book.borrows[0].id == account.id){
       const recent = book
